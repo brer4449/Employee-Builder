@@ -1,0 +1,27 @@
+{
+  "name": "homework10",
+  "version": "1.0.0",
+  "description": "// The different employee types should all inherit some methods and properties from a base class of Employee.",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brer4449/homework10.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brer4449/homework10/issues"
+  },
+  "homepage": "https://github.com/brer4449/homework10#readme",
+  "dependencies": {
+    "inquirer": "^7.0.4"
+  }
+}
