@@ -3,6 +3,7 @@ const fs = require("fs");
 const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
 
 const questions = [
   {
@@ -49,7 +50,7 @@ inquirer.prompt(questions).then(function(answers) {
             `Office Number: ${newManager.officeNum}`,
             "-".repeat(20)
           ].join("\n");
-          fs.writeFile("log.txt", writeData, err => {
+          fs.appendFile("log.txt", writeData, err => {
             if (err) throw err;
           });
         });
@@ -73,25 +74,41 @@ inquirer.prompt(questions).then(function(answers) {
             `Github Username: ${newEngineer.getGithub()}`,
             "-".repeat(20)
           ].join("\n");
-          fs.writeFile("log.txt", writeData, err => {
+          fs.appendFile("log.txt", writeData, err => {
             if (err) throw err;
           });
         });
       break;
     case "Intern":
-      inquirer.prompt([
-        {
-          type: "input",
-          message: "What school did you go to?",
-          name: "school"
-        }
-      ]);
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "What school did you go to?",
+            name: "school"
+          }
+        ])
+        .then(function(internAnswer) {
+          let newIntern = createIntern(answers, internAnswer);
+          let writeData = [
+            `Name: ${newIntern.getName()}`,
+            `ID: ${newIntern.getId()}`,
+            `Email: ${newIntern.getEmail()}`,
+            `Role: ${newIntern.getRole()}`,
+            `Alma Mater: ${newIntern.getSchool()}`,
+            "-".repeat(20)
+          ].join("\n");
+          fs.appendFile("log.txt", writeData, err => {
+            if (err) throw err;
+          });
+        });
       break;
     default:
       console.log("You must choose!");
   }
 });
 
+//Functions to get user input and then return it to CLI
 let createManager = (answers, managerAnswer) => {
   let newManager = new Manager(
     answers.id,
@@ -101,6 +118,7 @@ let createManager = (answers, managerAnswer) => {
   );
   return newManager;
 };
+
 let createEngineer = (answers, engineerAnswer) => {
   let newEngineer = new Engineer(
     answers.id,
@@ -109,4 +127,14 @@ let createEngineer = (answers, engineerAnswer) => {
     engineerAnswer.github
   );
   return newEngineer;
+};
+
+let createIntern = (answers, internAnswer) => {
+  let newIntern = new Intern(
+    answers.id,
+    answers.name,
+    answers.email,
+    internAnswer.school
+  );
+  return newIntern;
 };
