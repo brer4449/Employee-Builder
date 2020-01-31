@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const fs = require("fs");
 const Employee = require("./lib/employee");
 const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
 
 const questions = [
   {
@@ -45,6 +46,7 @@ inquirer.prompt(questions).then(function(answers) {
             `ID: ${newManager.getId()}`,
             `Email: ${newManager.getEmail()}`,
             `Role: ${newManager.getRole()}`,
+            `Office Number: ${newManager.officeNum}`,
             "-".repeat(20)
           ].join("\n");
           fs.writeFile("log.txt", writeData, err => {
@@ -53,13 +55,28 @@ inquirer.prompt(questions).then(function(answers) {
         });
       break;
     case "Engineer":
-      inquirer.prompt([
-        {
-          type: "input",
-          message: "What is your Github user name?",
-          name: "github"
-        }
-      ]);
+      inquirer
+        .prompt([
+          {
+            type: "input",
+            message: "What is your Github user name?",
+            name: "github"
+          }
+        ])
+        .then(function(engineerAnswer) {
+          let newEngineer = createEngineer(answers, engineerAnswer);
+          let writeData = [
+            `Name: ${newEngineer.getName()}`,
+            `ID: ${newEngineer.getId()}`,
+            `Email: ${newEngineer.getEmail()}`,
+            `Role: ${newEngineer.getRole()}`,
+            `Github Username: ${newEngineer.getGithub()}`,
+            "-".repeat(20)
+          ].join("\n");
+          fs.writeFile("log.txt", writeData, err => {
+            if (err) throw err;
+          });
+        });
       break;
     case "Intern":
       inquirer.prompt([
@@ -85,5 +102,11 @@ let createManager = (answers, managerAnswer) => {
   return newManager;
 };
 let createEngineer = (answers, engineerAnswer) => {
-  let;
+  let newEngineer = new Engineer(
+    answers.id,
+    answers.name,
+    answers.email,
+    engineerAnswer.github
+  );
+  return newEngineer;
 };
