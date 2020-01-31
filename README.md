@@ -1,29 +1,33 @@
-// The different employee types should all inherit some methods and properties from a base class of Employee.
+## Table of contents
 
-//Min requirements
-//Functional application.
-// GitHub repository with a unique name and a README describing the project.
-// User can use the CLI to generate an HTML page that displays information about their team.
-// All tests must pass.
+- [General info](#general-info)
+- [Instructions](#instructions)
+- [Functionality](#functionality)
+- [Technologies](#technologies)
+- [Dependencies](#dependencies)
+- [Github Link](#github-link)
 
-// The first class is an Employee parent class with the following properties and methods:
-// name
-// id
-// title
-// getName()
-// getId()
-// getEmail()
-// getRole() // Returns 'Employee'
+## General Info
 
-// The other three classes will extend Employee.
-// In addition to Employee's properties and methods, MANAGER will also have:
-// officeNumber
-// getRole() // Overridden to return 'Manager'
-// In addition to Employee's properties and methods, ENGINEER will also have:
-// github // GitHub username
-// getGithub()
-// getRole() // Overridden to return 'Engineer'
-// In addition to Employee's properties and methods, INTERN will also have:
-// school
-// getSchool()
-// getRole() // Overridden to return 'Intern'
+This application is a CLI app. This app builds a software engineering squad by taking in user inputs via inquirer prompts and displaying them to the user. The input information gets stored in a txt file that is dynamically appended to. Jest is used as a dev dependency to test the application. All three subclasses are extended off of the main employee class and inherit all of employee's properties.
+
+## Instructions
+
+The user must install inquirer to run this application and jest if they want to test it. The user will be prompted with questions that they should answer. All of their answers then get stored in a txt file, that grows as the software engineering team they've created grows.
+
+## Functionality
+
+![example of working application](https://github.com/brer4449/homework10/blob/master/assets/hw10.png)
+
+## Technologies
+
+Node version 12.13.1
+
+## Dependencies
+
+- Inquirer version 7.0.4
+- Jest version 25.1.0
+
+## Github Link
+
+https://github.com/brer4449/homework10
