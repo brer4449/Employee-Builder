@@ -5,6 +5,7 @@ const Manager = require("./lib/manager");
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 
+//Array of question objects
 const questions = [
   {
     type: "input",
