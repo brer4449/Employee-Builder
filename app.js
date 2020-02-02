@@ -55,7 +55,7 @@ questionPrompt = () => {
             fs.appendFile("log.txt", writeData, err => {
               if (err) throw err;
             });
-            questionPrompt();
+            exitPrompt();
           });
         break;
       case "Engineer":
@@ -80,7 +80,7 @@ questionPrompt = () => {
             fs.appendFile("log.txt", writeData, err => {
               if (err) throw err;
             });
-            questionPrompt();
+            exitPrompt();
           });
         break;
       case "Intern":
@@ -105,7 +105,7 @@ questionPrompt = () => {
             fs.appendFile("log.txt", writeData, err => {
               if (err) throw err;
             });
-            questionPrompt();
+            exitPrompt();
           });
         break;
       default:
@@ -115,6 +115,26 @@ questionPrompt = () => {
 };
 questionPrompt();
 
+//Function to exit series of questions
+exitPrompt = () => {
+  inquirer
+    .prompt({
+      type: "confirm",
+      message: "Do you want to make another employee?",
+      name: "confirmation"
+    })
+    .then(answers => {
+      if (answers.confirmation === false) {
+        return console.log(
+          "Your team has been assembled and has been written to the log.txt file."
+        );
+      } else {
+        console.log("Employee successfully added");
+        questionPrompt();
+      }
+      // console.log(answers.confirmation);
+    });
+};
 //Functions to get user input and then return it to CLI
 let createManager = (answers, managerAnswer) => {
   let newManager = new Manager(
