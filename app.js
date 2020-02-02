@@ -25,39 +25,77 @@ const questions = [
   {
     type: "list",
     message: "Pick a job title:",
-    choices: ["Manager", "Engineer", "Intern"],
+    choices: ["Engineer", "Intern"],
     name: "title"
   }
 ];
 
+const managerQuestions = [
+  {
+    type: "input",
+    message: "What is the manager's ID number?",
+    name: "id"
+  },
+  {
+    type: "input",
+    message: "What is the manager's name?",
+    name: "name"
+  },
+  {
+    type: "input",
+    message: "What is the manager's email?",
+    name: "email"
+  },
+  {
+    type: "input",
+    message: "What is their office number?",
+    name: "officeNum"
+  }
+];
+
 questionPrompt = () => {
+  inquirer.prompt(managerQuestions).then(function(managerAnswer) {
+    let newManager = createManager(managerAnswer);
+    let writeData = [
+      `Name: ${newManager.getName()}`,
+      `ID: ${newManager.getId()}`,
+      `Email: ${newManager.getEmail()}`,
+      `Role: ${newManager.getRole()}`,
+      `Office Number: ${newManager.officeNum}`,
+      "-".repeat(20),
+      `\n`
+    ].join("\n");
+    fs.appendFile("log.txt", writeData, err => {
+      if (err) throw err;
+    });
+    exitPrompt();
+  });
+};
+questionPrompt();
+
+//Function to exit series of questions or continue making a team
+exitPrompt = () => {
+  inquirer
+    .prompt({
+      type: "confirm",
+      message: "Do you want to make another employee?",
+      name: "confirmation"
+    })
+    .then(answers => {
+      if (answers.confirmation === false) {
+        return console.log(
+          "Your team has been assembled and has been written to the log.txt file."
+        );
+      } else {
+        console.log("Employee successfully added");
+        employeeQuestions();
+      }
+    });
+};
+
+employeeQuestions = () => {
   inquirer.prompt(questions).then(function(answers) {
     switch (answers.title) {
-      case "Manager":
-        inquirer
-          .prompt([
-            {
-              type: "input",
-              message: "What is their office number?",
-              name: "officeNum"
-            }
-          ])
-          .then(function(managerAnswer) {
-            let newManager = createManager(answers, managerAnswer);
-            let writeData = [
-              `Name: ${newManager.getName()}`,
-              `ID: ${newManager.getId()}`,
-              `Email: ${newManager.getEmail()}`,
-              `Role: ${newManager.getRole()}`,
-              `Office Number: ${newManager.officeNum}`,
-              "-".repeat(20)
-            ].join("\n");
-            fs.appendFile("log.txt", writeData, err => {
-              if (err) throw err;
-            });
-            exitPrompt();
-          });
-        break;
       case "Engineer":
         inquirer
           .prompt([
@@ -75,7 +113,8 @@ questionPrompt = () => {
               `Email: ${newEngineer.getEmail()}`,
               `Role: ${newEngineer.getRole()}`,
               `Github Username: ${newEngineer.getGithub()}`,
-              "-".repeat(20)
+              "-".repeat(20),
+              `\n`
             ].join("\n");
             fs.appendFile("log.txt", writeData, err => {
               if (err) throw err;
@@ -100,7 +139,8 @@ questionPrompt = () => {
               `Email: ${newIntern.getEmail()}`,
               `Role: ${newIntern.getRole()}`,
               `Alma Mater: ${newIntern.getSchool()}`,
-              "-".repeat(20)
+              "-".repeat(20),
+              `\n`
             ].join("\n");
             fs.appendFile("log.txt", writeData, err => {
               if (err) throw err;
@@ -113,34 +153,13 @@ questionPrompt = () => {
     }
   });
 };
-questionPrompt();
 
-//Function to exit series of questions
-exitPrompt = () => {
-  inquirer
-    .prompt({
-      type: "confirm",
-      message: "Do you want to make another employee?",
-      name: "confirmation"
-    })
-    .then(answers => {
-      if (answers.confirmation === false) {
-        return console.log(
-          "Your team has been assembled and has been written to the log.txt file."
-        );
-      } else {
-        console.log("Employee successfully added");
-        questionPrompt();
-      }
-      // console.log(answers.confirmation);
-    });
-};
 //Functions to get user input and then return it to CLI
-let createManager = (answers, managerAnswer) => {
+let createManager = managerAnswer => {
   let newManager = new Manager(
-    answers.id,
-    answers.name,
-    answers.email,
+    managerAnswer.id,
+    managerAnswer.name,
+    managerAnswer.email,
     managerAnswer.officeNum
   );
   return newManager;
