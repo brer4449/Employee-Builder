@@ -9,13 +9,13 @@ const Intern = require("./lib/intern");
 const questions = [
   {
     type: "input",
-    message: "What is the employee's ID number?",
-    name: "id"
+    message: "What is the employee's name?",
+    name: "name"
   },
   {
     type: "input",
-    message: "What is the employee's name?",
-    name: "name"
+    message: "What is the employee's ID number?",
+    name: "id"
   },
   {
     type: "input",
@@ -33,13 +33,13 @@ const questions = [
 const managerQuestions = [
   {
     type: "input",
-    message: "What is the manager's ID number?",
-    name: "id"
+    message: "What is the manager's name?",
+    name: "name"
   },
   {
     type: "input",
-    message: "What is the manager's name?",
-    name: "name"
+    message: "What is the manager's ID number?",
+    name: "id"
   },
   {
     type: "input",
@@ -157,8 +157,8 @@ employeeQuestions = () => {
 //Functions to get user input and then return it to CLI
 let createManager = managerAnswer => {
   let newManager = new Manager(
-    managerAnswer.id,
     managerAnswer.name,
+    managerAnswer.id,
     managerAnswer.email,
     managerAnswer.officeNum
   );
@@ -167,8 +167,8 @@ let createManager = managerAnswer => {
 
 let createEngineer = (answers, engineerAnswer) => {
   let newEngineer = new Engineer(
-    answers.id,
     answers.name,
+    answers.id,
     answers.email,
     engineerAnswer.github
   );
@@ -177,8 +177,8 @@ let createEngineer = (answers, engineerAnswer) => {
 
 let createIntern = (answers, internAnswer) => {
   let newIntern = new Intern(
-    answers.id,
     answers.name,
+    answers.id,
     answers.email,
     internAnswer.school
   );
