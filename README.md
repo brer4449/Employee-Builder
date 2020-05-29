@@ -5,7 +5,6 @@
 - [Functionality](#functionality)
 - [Technologies](#technologies)
 - [Dependencies](#dependencies)
-- [Github Link](#github-link)
 
 ## General Info
 
@@ -13,21 +12,17 @@ This application is a CLI app. This app builds a software engineering squad by t
 
 ## Instructions
 
-The user must install inquirer to run this application and jest if they want to test it. The user will be prompted with questions that they should answer. All of their answers then get stored in a txt file, that grows as the software engineering team they've created grows.
+The user must install inquirer to run this application and jest if they want to test it. The user will be prompted with questions that they should answer. All of their answers then get stored in a txt file, that grows as the software engineering team expands.
 
 ## Functionality
 
-![example of working application](https://github.com/brer4449/homework10/blob/master/assets/hw10.png)
+![example of working application](./assets/employees.gif)
 
 ## Technologies
 
-Node version 12.13.1
+Node version 12
 
 ## Dependencies
 
 - Inquirer version 7.0.4
 - Jest version 25.1.0
-
-## Github Link
-
-https://github.com/brer4449/homework10
