@@ -10,51 +10,51 @@ const questions = [
   {
     type: "input",
     message: "What is the employee's name?",
-    name: "name"
+    name: "name",
   },
   {
     type: "input",
     message: "What is the employee's ID number?",
-    name: "id"
+    name: "id",
   },
   {
     type: "input",
     message: "What is the employee's email?",
-    name: "email"
+    name: "email",
   },
   {
     type: "list",
     message: "Pick a job title:",
-    choices: ["Engineer", "Intern"],
-    name: "title"
-  }
+    choices: ["Engineer", "Intern", "Employee"],
+    name: "title",
+  },
 ];
 
 const managerQuestions = [
   {
     type: "input",
     message: "What is the manager's name?",
-    name: "name"
+    name: "name",
   },
   {
     type: "input",
     message: "What is the manager's ID number?",
-    name: "id"
+    name: "id",
   },
   {
     type: "input",
     message: "What is the manager's email?",
-    name: "email"
+    name: "email",
   },
   {
     type: "input",
     message: "What is their office number?",
-    name: "officeNum"
-  }
+    name: "officeNum",
+  },
 ];
 
 questionPrompt = () => {
-  inquirer.prompt(managerQuestions).then(function(managerAnswer) {
+  inquirer.prompt(managerQuestions).then(function (managerAnswer) {
     let newManager = createManager(managerAnswer);
     let writeData = [
       `Name: ${newManager.getName()}`,
@@ -63,9 +63,9 @@ questionPrompt = () => {
       `Role: ${newManager.getRole()}`,
       `Office Number: ${newManager.officeNum}`,
       "-".repeat(20),
-      `\n`
+      `\n`,
     ].join("\n");
-    fs.appendFile("log.txt", writeData, err => {
+    fs.appendFile("log.txt", writeData, (err) => {
       if (err) throw err;
     });
     exitPrompt();
@@ -79,22 +79,22 @@ exitPrompt = () => {
     .prompt({
       type: "confirm",
       message: "Do you want to make another employee?",
-      name: "confirmation"
+      name: "confirmation",
     })
-    .then(answers => {
+    .then((answers) => {
       if (answers.confirmation === false) {
         return console.log(
-          "Your team has been assembled and has been written to the log.txt file."
+          "Your team has been assembled and has been written to the log.txt file. Goodbye."
         );
       } else {
-        console.log("Employee successfully added");
+        console.log("Employee successfully added, let's add another.");
         employeeQuestions();
       }
     });
 };
 
 employeeQuestions = () => {
-  inquirer.prompt(questions).then(function(answers) {
+  inquirer.prompt(questions).then(function (answers) {
     switch (answers.title) {
       case "Engineer":
         inquirer
@@ -102,10 +102,10 @@ employeeQuestions = () => {
             {
               type: "input",
               message: "What is their Github user name?",
-              name: "github"
-            }
+              name: "github",
+            },
           ])
-          .then(function(engineerAnswer) {
+          .then(function (engineerAnswer) {
             let newEngineer = createEngineer(answers, engineerAnswer);
             let writeData = [
               `Name: ${newEngineer.getName()}`,
@@ -114,9 +114,9 @@ employeeQuestions = () => {
               `Role: ${newEngineer.getRole()}`,
               `Github Username: ${newEngineer.getGithub()}`,
               "-".repeat(20),
-              `\n`
+              `\n`,
             ].join("\n");
-            fs.appendFile("log.txt", writeData, err => {
+            fs.appendFile("log.txt", writeData, (err) => {
               if (err) throw err;
             });
             exitPrompt();
@@ -128,10 +128,10 @@ employeeQuestions = () => {
             {
               type: "input",
               message: "What school did they go to?",
-              name: "school"
-            }
+              name: "school",
+            },
           ])
-          .then(function(internAnswer) {
+          .then(function (internAnswer) {
             let newIntern = createIntern(answers, internAnswer);
             let writeData = [
               `Name: ${newIntern.getName()}`,
@@ -140,9 +140,34 @@ employeeQuestions = () => {
               `Role: ${newIntern.getRole()}`,
               `Alma Mater: ${newIntern.getSchool()}`,
               "-".repeat(20),
-              `\n`
+              `\n`,
             ].join("\n");
-            fs.appendFile("log.txt", writeData, err => {
+            fs.appendFile("log.txt", writeData, (err) => {
+              if (err) throw err;
+            });
+            exitPrompt();
+          });
+        break;
+      case "Employee":
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              message: "What is their job title?",
+              name: "role",
+            },
+          ])
+          .then(function (employeeAnswer) {
+            let newEmployee = createEmployee(answers, employeeAnswer);
+            let writeData = [
+              `Name: ${newEmployee.getName()}`,
+              `ID: ${newEmployee.getId()}`,
+              `Email: ${newEmployee.getEmail()}`,
+              `Role: ${newEmployee.getRole()}`,
+              "-".repeat(20),
+              `\n`,
+            ].join("\n");
+            fs.appendFile("log.txt", writeData, (err) => {
               if (err) throw err;
             });
             exitPrompt();
@@ -155,7 +180,7 @@ employeeQuestions = () => {
 };
 
 //Functions to get user input and then return it to CLI
-let createManager = managerAnswer => {
+let createManager = (managerAnswer) => {
   let newManager = new Manager(
     managerAnswer.name,
     managerAnswer.id,
@@ -183,4 +208,14 @@ let createIntern = (answers, internAnswer) => {
     internAnswer.school
   );
   return newIntern;
+};
+
+let createEmployee = (answers, employeeAnswer) => {
+  let newEmployee = new Employee(
+    answers.name,
+    answers.id,
+    answers.email,
+    employeeAnswer.role
+  );
+  return newEmployee;
 };
